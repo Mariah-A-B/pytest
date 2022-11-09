@@ -1,6 +1,8 @@
 import comp630 
 import logging
 import boto3
+from botocore.exceptions import ClientError
+
 
 def s3_upload(profile, file_name, bucket, object_name=None):
     session = boto3.Session(profile_name=profile)
@@ -16,11 +18,13 @@ def s3_upload(profile, file_name, bucket, object_name=None):
 
     return True
 
+
 def s3_download(profile, file_name, bucket, file_out):
     session = boto3.Session(profile_name=profile)
     s3 = boto3.client("s3", region_name="us-east-1")
     try:
-        s3.download_file(bucket, object_name, file_out)
+        s3.download_file(bucket, file_name, file_out)
+        response = s3.download_file(bucket, file_name, file_out)
         print(f'Download Response: {response}')
     except ClientError as e:
         print(e)

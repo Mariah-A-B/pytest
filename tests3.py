@@ -8,6 +8,7 @@ test_bucket = "s3_kgitlitz_bkt"
 test_file = "test.txt"
 object_name = "hello"
 
+
 @mock_s3 
 def test_s3():
     session = boto3.Session(profile_name='localstack')
